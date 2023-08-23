@@ -27,4 +27,17 @@ func main() {
 
 	parameterName := os.Args[1]
 	fileName := os.Args[2]
+
+	client := ssm.NewFromConfig(cfg)
+
+	mTrue := true
+	output, err := client.GetParameter(context.TODO(), &ssm.GetParameterInput{
+		Name:           &parameterName,
+		WithDecryption: &mTrue,
+	})
+
+	if err != nil {
+		fmt.Printf("[ERROR] getting parameter %s: %s\n", parameterName, err)
+		os.Exit(0)
+	}
 }
