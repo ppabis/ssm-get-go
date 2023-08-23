@@ -40,4 +40,18 @@ func main() {
 		fmt.Printf("[ERROR] getting parameter %s: %s\n", parameterName, err)
 		os.Exit(0)
 	}
+
+	file, err := os.Create(fileName)
+	if err != nil {
+		fmt.Printf("[ERROR] creating file %s: %s\n", fileName, err)
+		os.Exit(0)
+	}
+
+	defer file.Close()
+
+	_, err = file.WriteString(*output.Parameter.Value)
+	if err != nil {
+		fmt.Printf("[ERROR] writing file %s: %s\n", fileName, err)
+		os.Exit(0)
+	}
 }
